@@ -1,0 +1,11 @@
+<__pycache__/
+*.pyc
+*.pyo
+*.ipynb
+*.csv
+*.zip
+datasets/
+checkpoints/
+*.h5
+*.pth
+
