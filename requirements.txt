@@ -16,3 +16,4 @@ cirq==1.2.0
 matplotlib==3.8.0
 seaborn==0.13.0
 google-cloud-aiplatform==1.62.0
+google-generativeai
