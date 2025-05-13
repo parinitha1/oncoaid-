@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login - Bone Cancer Classification</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+  <style>
+    .gradient-bg {
+      background: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);
+    }
+    .card {
+      backdrop-filter: blur(10px);
+      background: rgba(255, 255, 255, 0.95);
+      transition: transform 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+    }
+    .input-field:focus {
+      transform: scale(1.02);
+    }
+  </style>
+</head>
+<body class="gradient-bg min-h-screen flex items-center justify-center px-4">
+  <div class="max-w-md w-full">
+    <div class="text-center mb-8">
+      <h2 class="text-4xl font-bold text-gray-800">
+        <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">Login</span>
+      </h2>
+      <p class="mt-2 text-gray-600">Access your account to continue</p>
+    </div>
+    <div class="card rounded-xl shadow-2xl p-8">
+      {% if error %}
+        <p class="text-red-600 text-center mb-4 font-medium">{{ error }}</p>
+      {% endif %}
+      <form method="POST" action="/login" class="space-y-6">
+        <div>
+          <label for="email" class="block text-sm font-semibold text-gray-700">Email</label>
+          <input type="email" name="email" id="email" required
+            class="input-field w-full px-4 py-3 mt-1 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+        </div>
+        <div>
+          <label for="password" class="block text-sm font-semibold text-gray-700">Password</label>
+          <input type="password" name="password" id="password" required
+            class="input-field w-full px-4 py-3 mt-1 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+        </div>
+        <button type="submit"
+          class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-3 rounded-lg font-semibold hover:from-blue-700 hover:to-indigo-700 transform hover:scale-105 transition-all duration-300">
+          Login
+        </button>
+        <p class="text-sm text-center text-gray-600 mt-4">Don't have an account?
+          <a href="/signup" class="text-blue-600 hover:underline">Sign up here</a>
+        </p>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

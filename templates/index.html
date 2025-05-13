@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bone Cancer Classification</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .gradient-bg {
+            background: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+        }
+        .card {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
+            transition: transform 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .input-field {
+            transition: all 0.3s ease;
+        }
+        .input-field:focus {
+            transform: scale(1.02);
+        }
+        .result-card {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: slideUp 0.5s ease forwards;
+        }
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .loading-spinner {
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .error-message {
+            color: #e53e3e;
+            background-color: #fee2e2;
+            border: 1px solid #f87171;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            margin-top: 1rem;
+            display: none;
+        }
+    </style>
+</head>
+<body class="gradient-bg min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <div class="max-w-4xl mx-auto">
+            <!-- Header -->
+            <div class="text-center mb-10">
+                <h1 class="text-5xl font-bold text-gray-800 mb-4 tracking-tight">
+                    <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">
+                        Bone Cancer Classification
+                    </span>
+                </h1>
+                <p class="text-xl text-gray-600">Advanced AI-Powered Treatment Recommendation System</p>
+            </div>
+            <!-- Navigation Bar -->
+            <div class="flex justify-center mb-10 space-x-6">
+                <a href="/about" class="text-lg text-blue-600 hover:text-blue-800">About</a>
+                <a href="/contact" class="text-lg text-blue-600 hover:text-blue-800">Contact</a>
+            </div>
+            <!-- Main Form -->
+            <div class="card rounded-xl shadow-2xl p-8 mb-8">
+                <form id="predictionForm" class="space-y-8">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <!-- Age -->
+                        <div class="space-y-2">
+                            <label class="block text-gray-700 text-sm font-semibold" for="age">
+                                Age
+                            </label>
+                            <input type="number" id="age" name="age" required min="0" max="120"
+                                class="input-field w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+
+                        <!-- Sex -->
+                        <div class="space-y-2">
+                            <label class="block text-gray-700 text-sm font-semibold" for="sex">
+                                Sex
+                            </label>
+                            <select id="sex" name="sex" required
+                                class="input-field w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                <option value="">Select Sex</option>
+                                <option value="Female">Female</option>
+                                <option value="Male">Male</option>
+                            </select>
+                        </div>
+
+                        <!-- Grade -->
+                        <div class="space-y-2">
+                            <label class="block text-gray-700 text-sm font-semibold" for="grade">
+                                Grade
+                            </label>
+                            <select id="grade" name="grade" required
+                                class="input-field w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                <option value="">Select Grade</option>
+                                <option value="High">High</option>
+                                <option value="Intermediate">Intermediate</option>
+                            </select>
+                        </div>
+
+                        <!-- Histological Type -->
+                        <div class="space-y-2">
+                            <label class="block text-gray-700 text-sm font-semibold" for="histological_type">
+                                Histological Type
+                            </label>
+                            <select id="histological_type" name="histological_type" required
+                                class="input-field w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                <option value="">Select Type</option>
+                                <option value="epithelioid sarcoma">Epithelioid Sarcoma</option>
+                                <option value="leiomyosarcoma">Leiomyosarcoma</option>
+                                <option value="malignant solitary fibrous tumor">Malignant Solitary Fibrous Tumor</option>
+                                <option value="myxofibrosarcoma">Myxofibrosarcoma</option>
+                                <option value="myxoid fibrosarcoma">Myxoid Fibrosarcoma</option>
+                                <option value="pleiomorphic leiomyosarcoma">Pleiomorphic Leiomyosarcoma</option>
+                                <option value="pleiomorphic spindle cell undifferentiated">Pleiomorphic Spindle Cell Undifferentiated</option>
+                                <option value="pleomorphic sarcoma">Pleomorphic Sarcoma</option>
+                                <option value="poorly differentiated synovial sarcoma">Poorly Differentiated Synovial Sarcoma</option>
+                                <option value="sclerosing epithelioid fibrosarcoma">Sclerosing Epithelioid Fibrosarcoma</option>
+                                <option value="synovial sarcoma">Synovial Sarcoma</option>
+                                <option value="undifferentiated - pleiomorphic">Undifferentiated - Pleiomorphic</option>
+                                <option value="undifferentiated pleomorphic liposarcoma">Undifferentiated Pleomorphic Liposarcoma</option>
+                            </select>
+                        </div>
+
+                        <!-- MSKCC Type -->
+                        <div class="space-y-2">
+                            <label class="block text-gray-700 text-sm font-semibold" for="mskcc_type">
+                                MSKCC Type
+                            </label>
+                            <select id="mskcc_type" name="mskcc_type" required
+                                class="input-field w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                <option value="">Select MSKCC Type</option>
+                                <option value="Leiomyosarcoma">Leiomyosarcoma</option>
+                                <option value="MFH">MFH</option>
+                                <option value="Synovial sarcoma">Synovial sarcoma</option>
+                            </select>
+                        </div>
+
+                        <!-- Site of Primary STS -->
+                        <div class="space-y-2">
+                            <label class="block text-gray-700 text-sm font-semibold" for="site_primary_sts">
+                                Site of Primary STS
+                            </label>
+                            <select id="site_primary_sts" name="site_primary_sts" required
+                                class="input-field w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                <option value="">Select Site</option>
+                                <option value="left biceps">Left Biceps</option>
+                                <option value="left buttock">Left Buttock</option>
+                                <option value="left thigh">Left Thigh</option>
+                                <option value="parascapusular">Parascapusular</option>
+                                <option value="right buttock">Right Buttock</option>
+                                <option value="right parascapusular">Right Parascapusular</option>
+                                <option value="right thigh">Right Thigh</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Error Message -->
+                    <div id="errorMessage" class="error-message"></div>
+
+                    <!-- Buttons -->
+                    <div class="flex justify-center mt-8 space-x-4">
+                        <button type="submit"
+                            class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-8 py-4 rounded-lg font-semibold text-lg hover:from-blue-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transform transition-all duration-300 hover:scale-105">
+                            Get Treatment Recommendation
+                        </button>
+                        <button type="button" id="preventionTipsButton"
+                            class="bg-gradient-to-r from-green-600 to-teal-600 text-white px-8 py-4 rounded-lg font-semibold text-lg hover:from-green-700 hover:to-teal-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transform transition-all duration-300 hover:scale-105">
+                            Get Prevention Tips
+                        </button>
+                        <button type="button" id="clearButton"
+                            class="bg-gradient-to-r from-gray-500 to-gray-600 text-white px-8 py-4 rounded-lg font-semibold text-lg hover:from-gray-600 hover:to-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transform transition-all duration-300 hover:scale-105">
+                            Clear Results
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Loading Spinner -->
+            <div id="loading" class="mt-8 text-center hidden">
+                <div class="inline-block loading-spinner rounded-full h-12 w-12 border-4 border-blue-500 border-t-transparent"></div>
+                <p class="mt-4 text-lg text-gray-600" id="loadingMessage">Analyzing patient data...</p>
+            </div>
+
+            <!-- Results Section -->
+            <div id="results" class="mt-8 space-y-6 hidden">
+                <!-- Classical ML Results -->
+                <div class="result-card card p-6 rounded-xl shadow-lg" style="animation-delay: 0s">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-brain text-2xl text-blue-500 mr-3"></i>
+                        <h3 class="text-xl font-semibold text-gray-800">Classical ML Recommendation</h3>
+                    </div>
+                    <div id="classical-result" class="text-gray-700 text-lg"></div>
+                </div>
+
+                <!-- Deep Learning Results -->
+                <div class="result-card card p-6 rounded-xl shadow-lg" style="animation-delay: 0.2s">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-network-wired text-2xl text-indigo-500 mr-3"></i>
+                        <h3 class="text-xl font-semibold text-gray-800">Deep Learning Recommendation</h3>
+                    </div>
+                    <div id="dl-result" class="text-gray-700 text-lg"></div>
+                </div>
+
+                <!-- Quantum ML Results -->
+                <div class="result-card card p-6 rounded-xl shadow-lg" style="animation-delay: 0.4s">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-atom text-2xl text-purple-500 mr-3"></i>
+                        <h3 class="text-xl font-semibold text-gray-800">Quantum ML Recommendation</h3>
+                    </div>
+                    <div id="qml-result" class="text-gray-700 text-lg"></div>
+                </div>
+
+                <!-- Quantum Neural Network Results -->
+                <div class="result-card card p-6 rounded-xl shadow-lg" style="animation-delay: 0.6s">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-atom text-2xl text-teal-500 mr-3"></i>
+                        <h3 class="text-xl font-semibold text-gray-800">Quantum Neural Network Recommendation</h3>
+                    </div>
+                    <div id="qnn-result" class="text-gray-700 text-lg"></div>
+                </div>
+            </div>
+
+            <!-- Prevention Tips Section -->
+            <div id="preventionTips" class="mt-8 space-y-6 hidden">
+                <div class="result-card card p-6 rounded-xl shadow-lg" style="animation-delay: 0.8s">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-shield-alt text-2xl text-green-500 mr-3"></i>
+                        <h3 class="text-xl font-semibold text-gray-800">Cancer Prevention Tips</h3>
+                    </div>
+                    <div id="prevention-tips-result" class="text-gray-700 text-lg"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Reset form and hide results
+        function resetFormAndResults() {
+            const form = document.getElementById('predictionForm');
+            const resultsElement = document.getElementById('results');
+            const preventionTipsElement = document.getElementById('preventionTips');
+            const errorElement = document.getElementById('errorMessage');
+            
+            form.reset();
+            if (resultsElement) resultsElement.classList.add('hidden');
+            if (preventionTipsElement) preventionTipsElement.classList.add('hidden');
+            if (errorElement) {
+                errorElement.style.display = 'none';
+                errorElement.textContent = '';
+            }
+        }
+
+        // Validate form inputs
+        function validateForm(formData, requiredFields) {
+            const missingFields = requiredFields.filter(field => !formData[field] || formData[field].trim() === '');
+            return missingFields;
+        }
+
+        document.getElementById('predictionForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            
+            const loadingElement = document.getElementById('loading');
+            const loadingMessage = document.getElementById('loadingMessage');
+            const resultsElement = document.getElementById('results');
+            const preventionTipsElement = document.getElementById('preventionTips');
+            const errorElement = document.getElementById('errorMessage');
+            
+            if (loadingElement) loadingElement.classList.remove('hidden');
+            if (loadingMessage) loadingMessage.textContent = 'Analyzing patient data...';
+            if (resultsElement) resultsElement.classList.add('hidden');
+            if (preventionTipsElement) preventionTipsElement.classList.add('hidden');
+            if (errorElement) {
+                errorElement.style.display = 'none';
+                errorElement.textContent = '';
+            }
+            
+            try {
+                const formData = {
+                    Age: document.getElementById('age').value,
+                    Sex: document.getElementById('sex').value,
+                    Grade: document.getElementById('grade').value,
+                    HistologicalType: document.getElementById('histological_type').value,
+                    MSKCCType: document.getElementById('mskcc_type').value,
+                    SiteOfPrimarySTS: document.getElementById('site_primary_sts').value
+                };
+                
+                const requiredFields = ['Age', 'Sex', 'Grade', 'HistologicalType', 'MSKCCType', 'SiteOfPrimarySTS'];
+                const missingFields = validateForm(formData, requiredFields);
+                if (missingFields.length > 0) {
+                    throw new Error(`Please fill in the following fields: ${missingFields.join(', ')}`);
+                }
+
+                // Additional validation for Age
+                const age = parseInt(formData.Age);
+                if (isNaN(age) || age < 0 || age > 120) {
+                    throw new Error('Age must be a number between 0 and 120.');
+                }
+                
+                const response = await fetch('/predict', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+                
+                if (!response.ok) {
+                    const text = await response.text();
+                    console.error('Prediction response:', text);
+                    throw new Error(`HTTP error! Status: ${response.status}, Response: ${text}`);
+                }
+                
+                const contentType = response.headers.get('content-type');
+                if (!contentType || !contentType.includes('application/json')) {
+                    const text = await response.text();
+                    console.error('Prediction response:', text);
+                    throw new Error('Invalid response format: Expected JSON');
+                }
+                
+                const data = await response.json();
+                
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+                
+                const classicalResult = document.getElementById('classical-result');
+                const dlResult = document.getElementById('dl-result');
+                const qmlResult = document.getElementById('qml-result');
+                const qnnResult = document.getElementById('qnn-result');
+                
+                classicalResult.innerHTML = `
+                    <p><strong>Recommended Treatment:</strong> ${data.recommendations.classical_ml}</p>
+                    <p><strong>Confidence:</strong> ${(Math.max(...data.treatment_probabilities.classical_ml) * 100).toFixed(2)}%</p>
+                `;
+                dlResult.innerHTML = `
+                    <p><strong>Recommended Treatment:</strong> ${data.recommendations.deep_learning}</p>
+                    <p><strong>Confidence:</strong> ${(Math.max(...data.treatment_probabilities.deep_learning) * 100).toFixed(2)}%</p>
+                `;
+                qmlResult.innerHTML = `
+                    <p><strong>Recommended Treatment:</strong> ${data.recommendations.quantum_ml}</p>
+                    <p><strong>Confidence:</strong> ${(Math.max(...data.treatment_probabilities.quantum_ml) * 100).toFixed(2)}%</p>
+                `;
+                qnnResult.innerHTML = `
+                    <p><strong>Recommended Treatment:</strong> ${data.recommendations.quantum_nn}</p>
+                    <p><strong>Confidence:</strong> ${(Math.max(...data.treatment_probabilities.quantum_nn) * 100).toFixed(2)}%</p>
+                `;
+                
+                if (resultsElement) resultsElement.classList.remove('hidden');
+            } catch (error) {
+                if (errorElement) {
+                    errorElement.textContent = 'Error: ' + error.message;
+                    errorElement.style.display = 'block';
+                }
+            } finally {
+                if (loadingElement) loadingElement.classList.add('hidden');
+            }
+        });
+
+        document.getElementById('preventionTipsButton').addEventListener('click', async function() {
+            const loadingElement = document.getElementById('loading');
+            const loadingMessage = document.getElementById('loadingMessage');
+            const preventionTipsElement = document.getElementById('preventionTips');
+            const resultsElement = document.getElementById('results');
+            const errorElement = document.getElementById('errorMessage');
+            
+            if (loadingElement) loadingElement.classList.remove('hidden');
+            if (loadingMessage) loadingMessage.textContent = 'Fetching prevention tips...';
+            if (preventionTipsElement) preventionTipsElement.classList.add('hidden');
+            if (resultsElement) resultsElement.classList.add('hidden');
+            if (errorElement) {
+                errorElement.style.display = 'none';
+                errorElement.textContent = '';
+            }
+            
+            try {
+                const formData = {
+                    Age: document.getElementById('age').value,
+                    Sex: document.getElementById('sex').value
+                };
+                
+                const requiredFields = ['Age', 'Sex'];
+                const missingFields = validateForm(formData, requiredFields);
+                if (missingFields.length > 0) {
+                    throw new Error(`Please fill in the following fields: ${missingFields.join(', ')}`);
+                }
+
+                // Additional validation for Age
+                const age = parseInt(formData.Age);
+                if (isNaN(age) || age < 0 || age > 120) {
+                    throw new Error('Age must be a number between 0 and 120.');
+                }
+                
+                const response = await fetch('/prevention', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+                
+                if (!response.ok) {
+                    const text = await response.text();
+                    console.error('Prevention tips response:', text);
+                    throw new Error(`HTTP error! Status: ${response.status}, Response: ${text}`);
+                }
+                
+                const contentType = response.headers.get('content-type');
+                if (!contentType || !contentType.includes('application/json')) {
+                    const text = await response.text();
+                    console.error('Prevention tips response:', text);
+                    throw new Error('Invalid response format: Expected JSON');
+                }
+                
+                const data = await response.json();
+                
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+                
+                const preventionTipsList = document.createElement('ul');
+                preventionTipsList.className = 'list-disc list-inside text-gray-700';
+                data.prevention_tips.forEach(tip => {
+                    const li = document.createElement('li');
+                    li.className = 'mb-2';
+                    li.textContent = tip;
+                    preventionTipsList.appendChild(li);
+                });
+                
+                const preventionTipsResult = document.getElementById('prevention-tips-result');
+                preventionTipsResult.innerHTML = '';
+                preventionTipsResult.appendChild(preventionTipsList);
+                
+                if (preventionTipsElement) preventionTipsElement.classList.remove('hidden');
+            } catch (error) {
+                if (errorElement) {
+                    errorElement.textContent = 'Error fetching prevention tips: ' + error.message;
+                    errorElement.style.display = 'block';
+                }
+            } finally {
+                if (loadingElement) loadingElement.classList.add('hidden');
+            }
+        });
+
+        document.getElementById('clearButton').addEventListener('click', function() {
+            resetFormAndResults();
+        });
+    </script>
+</body>
+</html>

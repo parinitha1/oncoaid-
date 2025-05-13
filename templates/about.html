@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About Us - Bone Cancer Classification</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+  <style>
+    .gradient-bg {
+      background: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);
+    }
+    .card {
+      backdrop-filter: blur(10px);
+      background: rgba(255, 255, 255, 0.95);
+      transition: transform 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+    }
+  </style>
+</head>
+<body class="gradient-bg min-h-screen text-gray-800">
+
+  <!-- Header -->
+ 
+<header class="bg-white text-black text-center py-8 shadow-md">
+    <h1 class="text-4xl font-bold">About Us</h1>
+    <nav class="mt-4 space-x-6">
+      <a href="/" class="hover:underline text-black font-medium">Home</a>
+      <a href="/contact" class="hover:underline text-black font-medium">Contact Us</a>
+    </nav>
+  </header>
+  
+
+  <!-- Content Card -->
+  <main class="max-w-5xl mx-auto px-6 py-10">
+    <div class="card rounded-2xl shadow-xl p-8 text-lg leading-relaxed">
+      <h2 class="text-2xl font-bold mb-4">Our Mission</h2>
+      <p class="mb-6">At our core, we are driven by a single mission: to provide cutting-edge technology and research-based solutions for bone cancer treatment and prevention...</p>
+
+      <h2 class="text-2xl font-bold mb-4">Our Approach</h2>
+      <p class="mb-6">Our team has developed a powerful web application that integrates machine learning, deep learning, and quantum models...</p>
+
+      <h2 class="text-2xl font-bold mb-4">Technologies We Use</h2>
+      <ul class="list-disc pl-6 mb-6 space-y-2">
+        <li><strong>Machine Learning & Deep Learning:</strong> Classical algorithms and deep neural networks...</li>
+        <li><strong>Quantum Machine Learning (QML):</strong> Enhanced predictions via quantum computing...</li>
+        <li><strong>Quantum Neural Networks (QNN):</strong> Trained with classical and quantum data...</li>
+        <li><strong>Large Language Models (LLM):</strong> Personalized prevention tips via Gemini's LLM...</li>
+        <li><strong>Flask:</strong> Backend logic and REST API support...</li>
+        <li><strong>React.js:</strong> Interactive and dynamic frontend...</li>
+        <li><strong>Pennylane:</strong> Quantum computations and QML/QNN integration...</li>
+      </ul>
+
+      <h2 class="text-2xl font-bold mb-4">Our Scrum Team</h2>
+      <div class="space-y-4">
+        <div>
+          <h3 class="text-xl font-semibold">1. Scrum Master – Nithin H</h3>
+          <p>Facilitates Scrum ceremonies, resolves blockers, and manages artifacts like product backlogs and burndown charts.</p>
+        </div>
+        <div>
+          <h3 class="text-xl font-semibold">2. Project Manager – Desu Sree Vardhan</h3>
+          <p>Oversees scope, timeline, milestones, and stakeholder communication.</p>
+        </div>
+        <div>
+          <h3 class="text-xl font-semibold">3. Developer – Vaishnav</h3>
+          <p>Designs ML/DL and QML/QNN models; integrates LLM-based personalized tips.</p>
+        </div>
+        <div>
+          <h3 class="text-xl font-semibold">4. Developer – Parinitha RK</h3>
+          <p>Handles frontend, UI/UX, and DevOps including CI/CD and deployment pipelines.</p>
+        </div>
+      </div>
+
+      <h2 class="text-2xl font-bold mt-8 mb-4">The Impact We Aim to Have</h2>
+      <p class="mb-6">Our application aims to transform how healthcare professionals and patients approach cancer treatment...</p>
+
+      <h2 class="text-2xl font-bold mb-4">Join Us on Our Journey</h2>
+      <p>We welcome collaboration from medical professionals, researchers, and the broader healthcare community...</p>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="text-center py-6 bg-gray-800 text-white text-sm mt-12">
+    &copy; OncoAid. All rights reserved.
+  </footer>
+</body>
+</html>

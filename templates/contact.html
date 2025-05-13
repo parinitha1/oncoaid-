@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact Us - Bone Cancer Classification</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+  <style>
+    .gradient-bg {
+      background: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);
+    }
+    .card {
+      backdrop-filter: blur(10px);
+      background: rgba(255, 255, 255, 0.95);
+      transition: transform 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+    }
+  </style>
+</head>
+<body class="gradient-bg min-h-screen text-gray-800">
+
+  <!-- Header -->
+  <header class="bg-white text-black text-center py-8 shadow-md">
+    <h1 class="text-4xl font-bold">Contact Us</h1>
+    <nav class="mt-4 space-x-6">
+      <a href="/" class="hover:underline text-black font-medium">Home</a>
+      <a href="/about" class="hover:underline text-black font-medium">About Us</a>
+      
+    </nav>
+  </header>
+
+  <!-- Contact Form Card -->
+  <main class="max-w-3xl mx-auto px-6 py-10">
+    <div class="card rounded-2xl shadow-xl p-8 text-lg leading-relaxed">
+      <h2 class="text-2xl font-bold mb-4">We'd Love to Hear From You!</h2>
+      <p class="mb-6">If you have any questions, feedback, or suggestions, feel free to get in touch with us. Our team is always ready to assist you with anything you may need.</p>
+
+      <form action="/submit-contact" method="POST" class="space-y-6">
+        <div>
+          <label for="name" class="block text-lg font-medium text-gray-700">Your Name</label>
+          <input type="text" id="name" name="name" required class="mt-2 w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"/>
+        </div>
+        <div>
+          <label for="email" class="block text-lg font-medium text-gray-700">Your Email</label>
+          <input type="email" id="email" name="email" required class="mt-2 w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"/>
+        </div>
+        <div>
+          <label for="message" class="block text-lg font-medium text-gray-700">Your Message</label>
+          <textarea id="message" name="message" rows="5" required class="mt-2 w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"></textarea>
+        </div>
+        <button type="submit" class="w-full bg-blue-500 text-white font-semibold py-3 rounded-lg hover:bg-blue-400 transition duration-300">
+          Submit
+        </button>
+      </form>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="text-center py-6 bg-gray-800 text-white text-sm mt-12">
+    &copy; OncoAid. All rights reserved.
+  </footer>
+
+</body>
+</html>
