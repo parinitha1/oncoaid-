@@ -110,19 +110,6 @@ docker run -p 5000:5000 oncoaid
 📬 Contact
 For feedback, suggestions, or collaborations:
 
-Parinitha RK
-Frontend, DevOps & LLM Integration
-Docker Hub: parinitha377
-
-⚠️ This project is for educational and research purposes only. It is not intended for clinical use without professional validation.
-
-yaml
-Copy
-Edit
-
----
-
-Let me know if you want this in a downloadable `.md` file, or want to tailor it to a specific deployment platform like Heroku, AWS, or GCP.
 
 
 
